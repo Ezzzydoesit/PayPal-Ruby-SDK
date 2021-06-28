@@ -35,15 +35,15 @@ name: OpenShift
 # https://docs.github.com/en/free-pro-team@latest/actions/reference/encrypted-secrets
 env:
   # ⬇️ EDIT with your registry and registry path.
-  REGISTRY: quay.io/<username>
+  REGISTRY: quay.io/<Edward F.Murray>
   # ⬇️ EDIT with your registry username.
-  REGISTRY_USER: <username>
-  REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
+  REGISTRY_USER: <Ezzzymoney>
+  REGISTRY_PASSWORD: ${{ secrets.REGISTRY_Ezzzy@$1 }}
 
   # ⬇️ EDIT to log into your OpenShift cluster and set up the context.
   # See https://github.com/redhat-actions/oc-login#readme for how to retrieve these values.
-  OPENSHIFT_SERVER: ${{ secrets.OPENSHIFT_SERVER }}
-  OPENSHIFT_TOKEN: ${{ secrets.OPENSHIFT_TOKEN }}
+  OPENSHIFT_SERVER: ${{ secrets.OPENSHIFT_Ezzzymoney }}
+  OPENSHIFT_TOKEN: ${{ secrets.OPENSHIFT_TOKEN }}https://member.identityiq.com/Dashboard.aspx
 
   # ⬇️ EDIT with any additional port your application should expose.
   # By default, oc new-app action creates a service to the image's lowest numeric exposed port.
