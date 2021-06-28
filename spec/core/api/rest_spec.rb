@@ -76,10 +76,11 @@ describe PayPal::SDK::Core::API::REST do
       }.to raise_error PayPal::SDK::Core::Exceptions::UnauthorizedAccess
     end
 
-    xit "Should handle expired token" do
+    it "Should handle expired token" do
       old_token = @api.token
       @api.token_hash[:expires_in] = 0
-      expect(@api.token).not_to eql old_token
+      new_token = @api.token
+      expect(@api.token_hash[:expires_in]).not_to eql 0
     end
 
     it "Get token" do
@@ -142,6 +143,69 @@ describe PayPal::SDK::Core::API::REST do
     it "Invalid parameters" do
       response = @api.post("payment")
       expect(response["error"]["name"]).to eql "VALIDATION_ERROR"
+    end
+  end
+
+  describe "format response" do
+    before :each do
+      @response = instance_double(Net::HTTPResponse)
+      allow(@response).to receive(:code) { "200" }
+      allow(@response).to receive(:content_type) { "application/json" }
+    end
+
+    it "parses empty object JSON correctly" do
+      allow(@response).to receive(:body) { "{}" }
+      payload = {
+        :response => @response
+      }
+
+      formatted_response = @api.format_response(payload)
+      expect(formatted_response).to_not be_nil
+      expect(formatted_response[:data]).to eq({})
+    end
+
+    it "parses empty string JSON correctly" do
+      allow(@response).to receive(:body) { '""' }
+      payload = {
+        :response => @response
+      }
+
+      formatted_response = @api.format_response(payload)
+      expect(formatted_response).to_not be_nil
+      expect(formatted_response[:data]).to eq("")
+    end
+
+    it "parses whitespace body correctly" do
+      allow(@response).to receive(:body) { ' 	 ' }
+      payload = {
+        :response => @response
+      }
+
+      formatted_response = @api.format_response(payload)
+      expect(formatted_response).to_not be_nil
+      expect(formatted_response[:data]).to eq({})
+    end
+
+    it "parses nil body correctly" do
+      allow(@response).to receive(:body) { nil }
+      payload = {
+        :response => @response
+      }
+
+      formatted_response = @api.format_response(payload)
+      expect(formatted_response).to_not be_nil
+      expect(formatted_response[:data]).to eq({})
+    end
+
+    it "parses with whitespace around JSON correctly" do
+      allow(@response).to receive(:body) { '    { "test": "value"  } ' }
+      payload = {
+        :response => @response
+      }
+
+      formatted_response = @api.format_response(payload)
+      expect(formatted_response).to_not be_nil
+      expect(formatted_response[:data]).to eq({ "test" => "value" })
     end
   end
 end

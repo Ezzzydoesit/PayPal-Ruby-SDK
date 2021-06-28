@@ -56,6 +56,106 @@ describe PayPal::SDK::Core::API::DataTypes::Base do
     expect(test_type.fromCurrency.amount).to  eql "50.0"
   end
 
+  it "invoice address loads all members of default address object" do
+    invoice_address = InvoiceAddress.new(:line1 => "line1", :line2 => "line2", :phone => { :country_code => "123", :national_number => "1231231234", :extension => "123" }, :status => "status" )
+    expect(invoice_address).to be_a InvoiceAddress
+    expect(invoice_address.phone).to be_a Phone
+    expect(invoice_address.line1).to eql "line1"
+    expect(invoice_address.line2).to eql "line2"
+    expect(invoice_address.status).to eql "status"
+    expect(invoice_address.phone.country_code).to eql "123"
+    expect(invoice_address.phone.national_number).to eql "1231231234"
+    expect(invoice_address.phone.extension).to eql "123"
+  end
+
+  it "billing info converts an address to invoiceaddress automatically" do
+    address = Address.new(:line1 => "line1", :line2 => "line2", :status => "status" )
+    billing_info = BillingInfo.new({
+      :first_name => "Sally",
+      :last_name => "Patient",
+      :business_name => "Not applicable",
+    })
+    billing_info.address = address
+    expect(billing_info.address).to be_a Address
+    expect(billing_info.invoice_address).to be_a InvoiceAddress
+  end
+
+  it "shipping info returns an Address even if set to InvoiceAddress for backwards compatibility" do
+    address = InvoiceAddress.new(:line1 => "line1", :line2 => "line2", :status => "status", :phone => { :national_number => "1234567890" } )
+    billing_info = BillingInfo.new({
+      :first_name => "Sally",
+      :last_name => "Patient",
+      :business_name => "Not applicable",
+    })
+    billing_info.address = address
+    expect(billing_info.address).to be_a Address
+    expect(billing_info.invoice_address).to be_a InvoiceAddress
+    expect(billing_info.invoice_address.phone.national_number).to eql "1234567890"
+  end
+
+  it "returns the address and invoice address types in the billing info" do
+    billing_info = BillingInfo.new({
+      "first_name" => "Sally",
+      "last_name" => "Patient",
+      "business_name" => "Not applicable",
+      "address" => {
+        "line1" => "line1Value",
+        "phone" => { "country_code" => "123", "national_number" => "1234567890", "extension" => "456" },
+      },
+    })
+    expect(billing_info.address).to be_a Address
+    expect(billing_info.address.line1).to eql "line1Value"
+    expect(billing_info.invoice_address).to be_a InvoiceAddress
+    expect(billing_info.invoice_address.line1).to eql "line1Value"
+    expect(billing_info.invoice_address.phone.country_code).to eql "123"
+    expect(billing_info.invoice_address.phone.national_number).to eql "1234567890"
+    expect(billing_info.invoice_address.phone.extension).to eql "456"
+  end
+
+  it "shipping info converts an address to invoiceaddress automatically" do
+    address = Address.new(:line1 => "line1", :line2 => "line2", :status => "status" )
+    shipping_info = ShippingInfo.new({
+      "first_name" => "Sally",
+      "last_name" => "Patient",
+      "business_name" => "Not applicable",
+    })
+    shipping_info.address = address
+    expect(shipping_info.address).to be_a Address
+    expect(shipping_info.invoice_address).to be_a InvoiceAddress
+  end
+
+  it "shipping info returns an Address even if set to InvoiceAddress for backwards compatibility" do
+    address = InvoiceAddress.new(:line1 => "line1", :line2 => "line2", :status => "status", :phone => { :national_number => "1234567890" } )
+    shipping_info = ShippingInfo.new({
+      "first_name" => "Sally",
+      "last_name" => "Patient",
+      "business_name" => "Not applicable",
+    })
+    shipping_info.address = address
+    expect(shipping_info.address).to be_a Address
+    expect(shipping_info.invoice_address).to be_a InvoiceAddress
+    expect(shipping_info.invoice_address.phone.national_number).to eql "1234567890"
+  end
+
+  it "returns the address and invoice address types in the shipping info" do
+    shipping_info = ShippingInfo.new({
+      "first_name" => "Sally",
+      "last_name" => "Patient",
+      "business_name" => "Not applicable",
+      "address" => {
+        "line1" => "line1Value",
+        "phone" => { "country_code" => "123", "national_number" => "1234567890", "extension" => "456" },
+      },
+    })
+    expect(shipping_info.address).to be_a Address
+    expect(shipping_info.address.line1).to eql "line1Value"
+    expect(shipping_info.invoice_address).to be_a InvoiceAddress
+    expect(shipping_info.invoice_address.line1).to eql "line1Value"
+    expect(shipping_info.invoice_address.phone.country_code).to eql "123"
+    expect(shipping_info.invoice_address.phone.national_number).to eql "1234567890"
+    expect(shipping_info.invoice_address.phone.extension).to eql "456"
+  end
+
   it "should allow block with initializer" do
     test_type = TestType.new do
       fromCurrency do

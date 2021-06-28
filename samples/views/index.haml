@@ -34,14 +34,6 @@
         %tr{:valign => "top", :class => "header"}
           %td Payments
         %tr{:valign => "top"}
-          %td Direct credit card payments
-          %td
-          %td{:width => "30%"}
-            %a.execute.imagelink{:href => "payment/create_with_credit_card"} Execute
-          %td
-          %td{:width => "30%"}
-            %a.source.imagelink{:href => "payment/create_with_credit_card.html"} Source
-        %tr
           %td PayPal Account Payments
           %td
           %td
@@ -50,13 +42,13 @@
           %td
             %a.source.imagelink{:href => "payment/create_with_paypal.html"} Source
         %tr
-          %td Saved credit card payments
+          %td Payments to a 3rd-Party Payee
           %td
           %td
-            %a.execute.imagelink{:href => "payment/create_with_credit_card_token"} Execute
+            %a.execute.imagelink{:href => "payment/create_third_party_with_paypal"} Execute
           %td
           %td
-            %a.source.imagelink{:href => "payment/create_with_credit_card_token.html"} Source
+            %a.source.imagelink{:href => "payment/create_third_party_with_paypal.html"} Source
         %tr
           %td Get Payment Details
           %td
@@ -107,6 +99,14 @@
           %td
           %td
             %a.source.imagelink{:href => "payouts/create.html"} Source
+        %tr
+          %td Create Venmo Batch Payout
+          %td
+          %td
+            %a.execute.imagelink{:href => "payouts/createVenmo"} Execute
+          %td
+          %td
+            %a.source.imagelink{:href => "payouts/createVenmo.html"} Source
         %tr
           %td Get Payout Batch Status
           %td
@@ -198,31 +198,105 @@
           %td
             %a.source.imagelink{:href => "notifications/simulate_event.html"} Source
         %tr{:valign => "top", :class => "header"}
-          %td Vault
+          %td Invoicing
         %tr
-          %td Save a credit card
+          %td Create an Invoice
           %td
           %td
-            %a.execute.imagelink{:href => "credit_card/create"} Execute
+            %a.execute.imagelink{:href => "invoice/create"} Execute
           %td
           %td
-            %a.source.imagelink{:href => "credit_card/create.html"} Source
+            %a.source.imagelink{:href => "invoice/create.html"} Source
         %tr
-          %td Get credit card details
+          %td Get invoice
           %td
           %td
-            %a.execute.imagelink{:href => "credit_card/find"} Execute
+            %a.execute.imagelink{:href => "invoice/get"} Execute
           %td
           %td
-            %a.source.imagelink{:href => "credit_card/find.html"} Source
+            %a.source.imagelink{:href => "invoice/get.html"} Source
         %tr
-          %td Delete credit card
+          %td Get all Invoices
           %td
           %td
-            %a.execute.imagelink{:href => "credit_card/delete"} Execute
+            %a.execute.imagelink{:href => "invoice/get_all"} Execute
           %td
           %td
-            %a.source.imagelink{:href => "credit_card/delete.html"} Source
+            %a.source.imagelink{:href => "invoice/get_all.html"} Source
+        %tr
+          %td Send invoice
+          %td
+          %td
+            %a.execute.imagelink{:href => "invoice/send"} Execute
+          %td
+          %td
+            %a.source.imagelink{:href => "invoice/send.html"} Source
+        %tr
+          %td Remind invoice
+          %td
+          %td
+            %a.execute.imagelink{:href => "invoice/remind"} Execute
+          %td
+          %td
+            %a.source.imagelink{:href => "invoice/remind.html"} Source
+        %tr
+          %td Cancel invoice
+          %td
+          %td
+            %a.execute.imagelink{:href => "invoice/cancel"} Execute
+          %td
+          %td
+            %a.source.imagelink{:href => "invoice/cancel.html"} Source
+        %tr
+          %td Third Party Invoice
+          %td
+          %td
+            %a.execute.imagelink{:href => "invoice/third_party"} Execute
+          %td
+          %td
+            %a.source.imagelink{:href => "invoice/third_party.html"} Source
+        %tr{:valign => "top", :class => "header"}
+          %td Invoicing Template
+        %tr
+          %td Create an invoice template
+          %td
+          %td
+            %a.execute.imagelink{:href => "invoice_template/create"} Execute
+          %td
+          %td
+            %a.source.imagelink{:href => "invoice_template/create.html"} Source
+        %tr
+          %td Get invoice template
+          %td
+          %td
+            %a.execute.imagelink{:href => "invoice_template/get"} Execute
+          %td
+          %td
+            %a.source.imagelink{:href => "invoice_template/get.html"} Source
+        %tr
+          %td Get all invoice template
+          %td
+          %td
+            %a.execute.imagelink{:href => "invoice_template/get_all"} Execute
+          %td
+          %td
+            %a.source.imagelink{:href => "invoice_template/get_all.html"} Source
+        %tr
+          %td Update invoicing template
+          %td
+          %td
+            %a.execute.imagelink{:href => "invoice_template/update"} Execute
+          %td
+          %td
+            %a.source.imagelink{:href => "invoice_template/update.html"} Source
+        %tr
+          %td Delete invoicing template
+          %td
+          %td
+            %a.execute.imagelink{:href => "invoice_template/delete"} Execute
+          %td
+          %td
+            %a.source.imagelink{:href => "invoice_template/delete.html"} Source
         %tr{:valign => "top", :class => "header"}
           %td Authorization and Capture
         %tr

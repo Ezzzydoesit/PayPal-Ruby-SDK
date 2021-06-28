@@ -1,7 +1,20 @@
+# Deprecation Notice:
+This SDK is deprecated. You can continue to use it, but no new features or support requests will be accepted.
+For alternatives, please visit [the current SDK homepage on the PayPal Developer Portal](https://developer.paypal.com/docs/api/rest-sdks/)
+
 ## PayPal REST API Ruby SDK [![Build Status](https://travis-ci.org/paypal/PayPal-Ruby-SDK.svg?branch=master)](https://travis-ci.org/paypal/PayPal-Ruby-SDK) [![Coverage Status](https://coveralls.io/repos/github/paypal/PayPal-Ruby-SDK/badge.svg?branch=master)](https://coveralls.io/github/paypal/PayPal-Ruby-SDK?branch=master)
 
 
 The PayPal REST SDK provides Ruby APIs to create, process and manage payment.
+
+## PayPal Checkout v2
+Please note that if you are integrating with PayPal Checkout, this SDK and corresponding API [v1/payments](https://developer.paypal.com/docs/api/payments/v1/) are in the process of being deprecated.
+
+We recommend that you integrate with API [v2/checkout/orders](https://developer.paypal.com/docs/api/orders/v2/) and [v2/payments](https://developer.paypal.com/docs/api/payments/v2/). Please refer to the [Checkout Ruby SDK](https://github.com/paypal/Checkout-Ruby-SDK) to continue with the integration.
+
+
+## 2.0 Release Candidate!
+We're releasing a [brand new version of our SDK!](https://github.com/paypal/PayPal-Ruby-SDK/tree/2.0-beta) 2.0 is currently at release candidate status, and represents a full refactor, with the goal of making all of our APIs extremely easy to use. 2.0 includes all of the existing APIs (except payouts), and includes the new Orders API (disputes and Marketplace coming soon). Check out the [FAQ and migration guide](https://github.com/paypal/PayPal-Ruby-SDK/tree/2.0-beta/docs), and let us know if you have any suggestions or issues!
 
 ## Prerequisites
 - Ruby 2.0.0 or above
@@ -134,38 +147,25 @@ PayPal::SDK::REST.set_config(
 
 # Build Payment object
 @payment = Payment.new({
-  :intent => "sale",
-  :payer => {
-    :payment_method => "credit_card",
-    :funding_instruments => [{
-      :credit_card => {
-        :type => "visa",
-        :number => "4567516310777851",
-        :expire_month => "11",
-        :expire_year => "2018",
-        :cvv2 => "874",
-        :first_name => "Joe",
-        :last_name => "Shopper",
-        :billing_address => {
-          :line1 => "52 N Main ST",
-          :city => "Johnstown",
-          :state => "OH",
-          :postal_code => "43210",
-          :country_code => "US" }}}]},
-  :transactions => [{
+  :intent =>  "sale",
+  :payer =>  {
+    :payment_method =>  "paypal" },
+  :redirect_urls => {
+    :return_url => "http://localhost:3000/payment/execute",
+    :cancel_url => "http://localhost:3000/" },
+  :transactions =>  [{
     :item_list => {
       :items => [{
         :name => "item",
         :sku => "item",
-        :price => "1",
+        :price => "5",
         :currency => "USD",
         :quantity => 1 }]},
-    :amount => {
-      :total => "1.00",
-      :currency => "USD" },
-    :description => "This is the payment transaction description." }]})
+    :amount =>  {
+      :total =>  "5",
+      :currency =>  "USD" },
+    :description =>  "This is the payment transaction description." }]})
 
-# Create Payment and return the status(true or false)
 if @payment.create
   @payment.id     # Payment Id
 else
@@ -185,8 +185,6 @@ payment_history.payments
 ```
 
 ## Execute Payment
-
-Only for [Payment](https://github.com/paypal/rest-api-sdk-ruby/blob/master/samples/payment/create_with_paypal.rb) with `payment_method` as `"paypal"`
 
 ```ruby
 payment = Payment.find("PAY-57363176S1057143SKE2HO3A")
@@ -273,6 +271,10 @@ rescue ResourceNotFound => err
   logger.error @payout.error.inspect
 end
 ```
+
+## Direct Credit Card Support
+[Braintree Direct](https://www.braintreepayments.com/products/braintree-direct) is PayPal's preferred integration solution for accepting direct credit card payments in your mobile app or website. Braintree, a PayPal service, is the easiest way to accept credit cards, PayPal, and many other payment methods.
+
 ## License
 Code released under [SDK LICENSE](LICENSE)  
 

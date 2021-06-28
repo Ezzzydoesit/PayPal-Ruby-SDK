@@ -14,7 +14,6 @@ module PayPal::SDK::Core
       DEFAULT_REST_END_POINTS = {
         :sandbox => "https://api.sandbox.paypal.com",
         :live    => "https://api.paypal.com",
-        :security_test_sandbox   => "https://test-api.sandbox.paypal.com"
       }
       TOKEN_REQUEST_PARAMS = "grant_type=client_credentials"
 
@@ -140,15 +139,29 @@ module PayPal::SDK::Core
       def format_response(payload)
         response = payload[:response]
         payload[:data] =
-          if response.code >= "200" and response.code <= "299"
+          if response.body && response.body.strip == ""
+            {}
+          elsif response.code >= "200" and response.code <= "299"
             response.body && response.content_type == "application/json" ? MultiJson.load(response.body) : {}
           elsif response.content_type == "application/json"
-            { "error" => MultiJson.load(response.body) }
+            { "error" => flat_hash(MultiJson.load(response.body)) }
           else
             { "error" => { "name" => response.code, "message" => response.message,
               "developer_msg" => response } }
           end
         payload
+      end
+
+      def flat_hash(h)
+        new_hash = {}
+        h.each_pair do |key, val|
+          if val.is_a?(Hash)
+            new_hash.merge!(flat_hash(val))
+          else
+            new_hash[key] = val
+          end
+        end
+        new_hash
       end
 
       # Log PayPal-Request-Id header

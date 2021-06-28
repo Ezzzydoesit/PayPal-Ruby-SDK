@@ -1,4 +1,4 @@
-# #Create Payment Using PayPal Sample
+# #Create Third Party Payment Using PayPal Sample
 # This sample code demonstrates how you can process a
 # PayPal Account based Payment.
 # API used: /v1/payments/payment
@@ -28,7 +28,14 @@ include PayPal::SDK::Core::Logging
   # payment - what is the payment for and who
   # is fulfilling it.
   :transactions =>  [{
-
+    
+    # ### Payee
+    # Specify a payee with that user's email or merchant id
+    # Merchant Id can be found at https://www.paypal.com/businessprofile/settings/
+    :payee => {
+        :email => "stevendcoffey-facilitator@gmail.com"
+    },
+    
     # Item List
     :item_list => {
       :items => [{

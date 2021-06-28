@@ -1,5 +1,51 @@
 PayPal Ruby SDK release notes
 =============================
+
+v1.7.4
+------
+  * Update Payouts API for latest schema [#388](https://github.com/paypal/PayPal-Ruby-SDK/pull/388).
+
+v1.7.3
+------
+  * Adding disputes in data_types.rb.
+  * Fix issue `no implicit conversion of Array into String` [#363](https://github.com/paypal/PayPal-Ruby-SDK/pull/363).
+
+v1.7.2
+------
+  * Remove logging of unknown fields.
+  * Fix issue with `require net/http` [#331](https://github.com/paypal/PayPal-Ruby-SDK/pull/331). Thanks Borzik.
+
+v1.7.1
+------
+  * Use `NET` library to fetch webhook ceritifcate. Thanks Kramer.
+
+v1.7.0
+------
+  * Add `invoice_address` field on Invoice's BillingInfo and ShippingInfo types [#322](https://github.com/paypal/PayPal-Ruby-SDK/pull/322) and [#326](https://github.com/paypal/PayPal-Ruby-SDK/pull/326).
+  * Fix issue with capitalization for encType in Links attribute [#314](https://github.com/paypal/PayPal-Ruby-SDK/issues/314).
+
+v1.6.1
+------
+  * Fix issue with wrong method declared for `WebhookEvent.find` and `WebHookEvent.all` [#270](https://github.com/paypal/PayPal-Ruby-SDK/pull/270) and [#306](https://github.com/paypal/PayPal-Ruby-SDK/pull/306).
+  * Fix issue with invalid JSON handling. [#302](https://github.com/paypal/PayPal-Ruby-SDK/issues/302).
+  * Fix issue with missing `ResourceInvalid` type [#298](https://github.com/paypal/PayPal-Ruby-SDK/issues/298).
+  * Fix issue with `ErrorHash.convert` for nested hashes [#257](https://github.com/paypal/PayPal-Ruby-SDK/issues/257).
+  * Update code to find PayPal approval redirect URL using relationship identifier instead of by method.
+
+v1.6.0
+------
+  * Update Payments API for latest schema [#246](https://github.com/paypal/PayPal-Ruby-SDK/pull/246).
+  * Changed no method found log to debug [#245](https://github.com/paypal/PayPal-Ruby-SDK/pull/245).
+
+v1.5.0
+------
+  * Update Payments Experience API for latest schema [#242](https://github.com/paypal/PayPal-Ruby-SDK/pull/242).
+  * Update Webhooks for latest schema [#238](https://github.com/paypal/PayPal-Ruby-SDK/pull/238).
+  * Flatten error hashes [#240](https://github.com/paypal/PayPal-Ruby-SDK/pull/240).
+  * Use SecureRandom instead of uuidtools [#237](https://github.com/paypal/PayPal-Ruby-SDK/pull/237).
+  * Update Invoicing Templates for latest schema [#235](https://github.com/paypal/PayPal-Ruby-SDK/pull/235).
+  * Update OpenID Connect signin URL [#225](https://github.com/paypal/PayPal-Ruby-SDK/pull/225).
+
 v1.4.9
 ------
   * Use String.force_encoding to force conversion to UTF-8 [#220](https://github.com/paypal/PayPal-Ruby-SDK/pull/220).
@@ -14,7 +60,7 @@ v1.4.8
 v1.4.7
 ------
   * Enabled third party invoicing for all invoicing API operations [#209](https://github.com/paypal/PayPal-Ruby-SDK/pull/209).
-  
+
 v1.4.6
 ------
   * Enabled Third Party Invoicing [#204](https://github.com/paypal/PayPal-Ruby-SDK/pull/204).
@@ -64,7 +110,7 @@ v1.3.3
   * Removed `payment_details` field in invoice per [API change](https://developer.paypal.com/webapps/developer/docs/api/#invoice-object).
   * Added `payment_options` field to Transaction per [API change](https://developer.paypal.com/webapps/developer/docs/api/#transaction-object).
   * Added secure logging to avoid logging confidential data (e.g., credit card number).
- 
+
 v1.3.2
 ------
   * Fixed webprofile.create().
